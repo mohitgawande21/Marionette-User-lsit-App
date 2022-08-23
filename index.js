@@ -62,7 +62,9 @@ var userView = Marionette.ItemView.extend({
     padding: '10px',
     events: {
         'click #delete-btn': 'deleteUser',
-        'click #checkbox-input': 'checked'
+        'click #checkbox-input': 'checked',
+        'click #edit-btn':'editUser',
+        'click #update-btn':'updateUser'
     },
     attributes: function () {
         var padding = '10px'
@@ -87,6 +89,23 @@ var userView = Marionette.ItemView.extend({
        this.model.set("selected", selected)
 
     },
+    editUser:function(){
+       this.$('#update-btn').show()
+       this.$('#edit-btn').hide()
+        var name=this.$('.name').html()
+        var email=this.$('.email').html()
+        console.log("click edit",name,email)
+        this.$('.name').html(`<input class=editname type=text > `)
+        this.$('.email').html(`<input class=editemail type=text> `)
+        this.$('.editname').val(name)
+        this.$('.editemail').val(email)
+    },
+    updateUser:function(){
+        this.$('#update-btn').hide()
+        this.$('#edit-btn').show()
+        this.$('.name').html($('.editname').val())
+        this.$('.email').html($('.editemail').val())
+    }
 })
 
 var usersColletionView = Marionette.CollectionView.extend({
