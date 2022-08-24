@@ -159,8 +159,9 @@ var searchView = Marionette.ItemView.extend({
     clearSearch:function(){
         this.collection.fetch()
         $('.user-li').css("background-color", "rgba(255, 255, 200, 0.8)")
-
         $('.search-input').val('')
+        $('.name').css('color','black')
+        $('.email').css('color','black')
     }
 
 })
