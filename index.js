@@ -139,10 +139,16 @@ var searchView = Marionette.ItemView.extend({
     searchUser: function (e) {
         var searchText = $(e.target)
         var filterdColletion = _.filter(this.collection.toJSON(), function (model) {
-            if (model.name.includes(searchText.val())||model.email.includes(searchText.val())) {
+            if (model.name.toLowerCase().includes(searchText.val().toLowerCase())||model.email.toLowerCase().includes(searchText.val().toLowerCase())) {
                 // this.$('p').css("color", "red")
                 setTimeout(()=>{
-                    $('.user-li').css("background-color", "yellow")
+                    $('.user-li').css("background-color", "#d3d3bb")
+                    
+                    if(model.name.toLowerCase().includes(searchText.val().toLowerCase())){
+                        this.$('.name').css('color','red')
+                    }else{
+                        this.$('.email').css('color','red')
+                    }
                 },20)
                 return model
             }
