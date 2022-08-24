@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>User List App</title>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
     <script type="text/javascript"
@@ -36,14 +36,32 @@
                 grid-template-columns: auto !important;
             }
         }
+
+        .search-input {
+            width: 247px;
+        }
+
+        .clear-search {
+            position: relative;
+            text-align: center;
+            right: 23px;
+            bottom: -1px;
+            padding: 0;
+            height: 24px;
+            outline: none;
+            border: none;
+            background-color: white;
+            font-size: large;
+        }
+        
     </style>
 </head>
 
 <body>
 
-    <h2 class="text-center my-2">
+    <h3 class="text-center my-2">
         Notes Management App
-    </h2>
+    </h3>
     <div id="form" class="d-flex justify-content-center align-items-center"></div>
     <script type="text/template" id="formTemplate">
         <table class="table">
@@ -72,6 +90,7 @@
     <div class='search d-flex justify-content-center'></div>
     <script type='text/template' class='searchTemplate'>
         <input type="text" class="search-input" placeholder='Search User or type Email'/>
+        <button class='clear-search'>X</button>
     </script>
 
     <div id="list" class=""></div>
