@@ -43,14 +43,14 @@ var formView = Marionette.ItemView.extend({
         if (selected) {
             iteratecheckbox.forEach((box) => {
                 box.setAttribute('checked', 'true')
-                $('div#user-li').css("color", "red")
+                $('div.user-li').css("color", "red")
             });
 
         }
         else {
             iteratecheckbox.forEach((box) => {
                 box.removeAttribute('checked')
-                $('div#user-li').css("color", "black")
+                $('div.user-li').css("color", "black")
             });
         }
     }
