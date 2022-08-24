@@ -116,11 +116,6 @@ var usersColletionView = Marionette.CollectionView.extend({
         var padding = '10px'
         return {
             'style': `display:grid; grid-template-columns: auto auto auto;padding:${padding};`,
-            // 'style':`@media screen and (min-width: 480px) {
-            //     body {
-            //       background-color: lightgreen;
-            //     }
-            //   }`
         };
     },
     initialize: function () {
@@ -135,10 +130,21 @@ var usersColletionView = Marionette.CollectionView.extend({
     },
 })
 
+var searchView=Marionette.ItemView.extend({
+    template:_.template($('.searchTemplate').html()),
+    events:{
+        'change .search-input':'searchUser'
+    },
+    searchUser:function(){
+        console.log('change search')
+    }
+
+})
 
 app.addRegions({
     list: '#list',
-    form: '#form'
+    form: '#form',
+    search:'.search',
 })
 
 $(document).ready(function () {
@@ -154,6 +160,10 @@ $(document).ready(function () {
         ])
         var formview = new formView({ collection: appcolletion })
         app.form.show(formview)
+        
+        var searchview = new searchView({ collection: appcolletion })
+        app.search.show(searchview)
+
         var userscolletionview = new usersColletionView({ collection: appcolletion })
         app.list.show(userscolletionview)
     })
