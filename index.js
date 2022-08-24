@@ -58,13 +58,13 @@ var formView = Marionette.ItemView.extend({
 
 var userView = Marionette.ItemView.extend({
     template: _.template($('#userTemplate').html()),
-    id: 'user-li',
+    className: 'user-li',
     padding: '10px',
     events: {
         'click #delete-btn': 'deleteUser',
         'click #checkbox-input': 'checked',
-        'click #edit-btn':'editUser',
-        'click #update-btn':'updateUser'
+        'click #edit-btn': 'editUser',
+        'click #update-btn': 'updateUser'
     },
     attributes: function () {
         var padding = '10px'
@@ -86,21 +86,21 @@ var userView = Marionette.ItemView.extend({
             this.$('p').css("color", "black")
             this.$('input').removeAttr('checked', 'false')
         }
-       this.model.set("selected", selected)
+        this.model.set("selected", selected)
 
     },
-    editUser:function(){
-       this.$('#update-btn').show()
-       this.$('#edit-btn').hide()
-        var name=this.$('.name').html()
-        var email=this.$('.email').html()
-        console.log("click edit",name,email)
+    editUser: function () {
+        this.$('#update-btn').show()
+        this.$('#edit-btn').hide()
+        var name = this.$('.name').html()
+        var email = this.$('.email').html()
+        console.log("click edit", name, email)
         this.$('.name').html(`<input class=editname type=text > `)
         this.$('.email').html(`<input class=editemail type=text> `)
         this.$('.editname').val(name)
         this.$('.editemail').val(email)
     },
-    updateUser:function(){
+    updateUser: function () {
         this.$('#update-btn').hide()
         this.$('#edit-btn').show()
         this.$('.name').html($('.editname').val())
@@ -111,7 +111,7 @@ var userView = Marionette.ItemView.extend({
 var usersColletionView = Marionette.CollectionView.extend({
     childView: userView,
     tagName: 'ul',
-    id:'user-ul',
+    id: 'user-ul',
     attributes: function () {
         var padding = '10px'
         return {
@@ -130,13 +130,31 @@ var usersColletionView = Marionette.CollectionView.extend({
     },
 })
 
-var searchView=Marionette.ItemView.extend({
-    template:_.template($('.searchTemplate').html()),
-    events:{
-        'change .search-input':'searchUser'
+var searchView = Marionette.ItemView.extend({
+    template: _.template($('.searchTemplate').html()),
+    events: {
+        'change .search-input': 'searchUser',
+        'click .clear-search':'clearSearch'
     },
-    searchUser:function(){
-        console.log('change search')
+    searchUser: function (e) {
+        var searchText = $(e.target)
+        var filterdColletion = _.filter(this.collection.toJSON(), function (model) {
+            if (model.name.includes(searchText.val())||model.email.includes(searchText.val())) {
+                // this.$('p').css("color", "red")
+                setTimeout(()=>{
+                    $('.user-li').css("background-color", "yellow")
+                },20)
+                return model
+            }
+        })
+        this.collection.set(filterdColletion)
+        console.log(this.collection.set(filterdColletion))
+    },
+    clearSearch:function(){
+        this.collection.fetch()
+        $('.user-li').css("background-color", "rgba(255, 255, 200, 0.8)")
+
+        $('.search-input').val('')
     }
 
 })
@@ -144,7 +162,7 @@ var searchView=Marionette.ItemView.extend({
 app.addRegions({
     list: '#list',
     form: '#form',
-    search:'.search',
+    search: '.search',
 })
 
 $(document).ready(function () {
@@ -160,7 +178,7 @@ $(document).ready(function () {
         ])
         var formview = new formView({ collection: appcolletion })
         app.form.show(formview)
-        
+
         var searchview = new searchView({ collection: appcolletion })
         app.search.show(searchview)
 
